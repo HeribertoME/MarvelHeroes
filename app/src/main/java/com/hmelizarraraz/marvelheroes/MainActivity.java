@@ -4,6 +4,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -21,7 +22,11 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     private static final String HERO_LIST_FRAGMENT = "hero_list_fragment";
+    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final int SUCCESS_CODE = 200;
+
     private FrameLayout frameLayout;
+    private ArrayList<SuperHero> superHeros;
 
     public static final int AVENGERS_COMIC_ID = 354;
 
@@ -30,13 +35,31 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        frameLayout = (FrameLayout) findViewById(R.id.placeHolder);
+
         Call<Basic<Data<ArrayList<SuperHero>>>> superHeroesCall = MarvelService.getMarvelAPI().getHeroes(AVENGERS_COMIC_ID);
 
         superHeroesCall.enqueue(new Callback<Basic<Data<ArrayList<SuperHero>>>>() {
             @Override
             public void onResponse(Call<Basic<Data<ArrayList<SuperHero>>>> call, Response<Basic<Data<ArrayList<SuperHero>>>> response) {
 
-                Toast.makeText(MainActivity.this, "Heroe: " + response.body().getData().getResults().get(2).getName(), Toast.LENGTH_LONG).show();
+                if (response.code() == SUCCESS_CODE) {
+
+                    superHeros = response.body().getData().getResults();
+
+                    Toast.makeText(MainActivity.this, "Heroe: " + superHeros.get(1).getName(), Toast.LENGTH_LONG).show();
+
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                    HeroListFragment heroListFragment = new HeroListFragment();
+                    fragmentTransaction.add(R.id.placeHolder, heroListFragment, HERO_LIST_FRAGMENT);
+                    fragmentTransaction.commit();
+                } else {
+                    Log.d(TAG,"Ocurrio un error en la respuesta. Error: " + response.code());
+                }
+
+
             }
 
             @Override
@@ -47,13 +70,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        frameLayout = (FrameLayout) findViewById(R.id.placeHolder);
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        HeroListFragment heroListFragment = new HeroListFragment();
-        fragmentTransaction.add(R.id.placeHolder, heroListFragment, HERO_LIST_FRAGMENT);
-        fragmentTransaction.commit();
+
     }
 }
