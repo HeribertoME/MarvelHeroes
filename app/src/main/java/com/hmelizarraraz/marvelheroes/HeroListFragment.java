@@ -3,6 +3,7 @@ package com.hmelizarraraz.marvelheroes;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 
 
 public class HeroListFragment extends Fragment {
+
+    public static final String TAG = HeroListFragment.class.getSimpleName();
 
     ArrayList<SuperHero> superHeros;
 
@@ -28,7 +31,11 @@ public class HeroListFragment extends Fragment {
         Bundle bundle = getArguments();
         superHeros = bundle.getParcelableArrayList(MainActivity.HERO_LIST);
 
-        Toast.makeText(getContext(), "El primer super heroe es: " + superHeros.get(0).getName(), Toast.LENGTH_SHORT).show();
+        if (superHeros == null) {
+            Log.d(TAG, "No se recuperaron heroes en el bundle");
+        } else {
+            Toast.makeText(getContext(), "El primer super heroe es: " + superHeros.get(0).getName(), Toast.LENGTH_SHORT).show();
+        }
 
     }
 
