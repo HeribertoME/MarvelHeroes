@@ -18,7 +18,16 @@ public interface Marvel {
 
     String BASE_URL = "http://gateway.marvel.com/";
 
-    @GET("v1/public/series/{seriesId}/characters?apikey=180c59c14e5357d786951a00c07ad646&ts=1&hash=b041fe2872a01077a91fe058dd819b58")
+    String API_KEY_KEY = "apikey";
+    String API_KEY_VALUE = "180c59c14e5357d786951a00c07ad646";
+
+    String TIME_STAMP_KEY = "ts";
+    String TIME_STAMP_VALUE = "1";
+
+    String HASH_KEY = "hash";
+    String HASH_VALUE = "b041fe2872a01077a91fe058dd819b58";
+
+    @GET("v1/public/series/{seriesId}/characters")
     Call<Basic<Data<ArrayList<SuperHero>>>> getHeroes(@Path("seriesId") int seriesId);
 
 }
