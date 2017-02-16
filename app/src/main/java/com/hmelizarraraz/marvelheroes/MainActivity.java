@@ -2,6 +2,7 @@ package com.hmelizarraraz.marvelheroes;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.hmelizarraraz.marvelheroes.API.MarvelService;
@@ -16,6 +17,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
+
+    private FrameLayout frameLayout;
 
     public static final int AVENGERS_COMIC_ID = 354;
 
@@ -40,5 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        frameLayout = (FrameLayout) findViewById(R.id.placeHolder);
     }
 }
