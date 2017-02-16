@@ -1,15 +1,49 @@
 package com.hmelizarraraz.marvelheroes.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by heriberto on 15/02/17.
  */
 
-public class SuperHero {
+public class SuperHero implements Parcelable{
 
     private int id;
     private String name;
     private String description;
     private Thumbnail thumbnail;
+
+    protected SuperHero(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        description = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeString(description);
+        dest.writeValue(thumbnail);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<SuperHero> CREATOR = new Creator<SuperHero>() {
+        @Override
+        public SuperHero createFromParcel(Parcel in) {
+            return new SuperHero(in);
+        }
+
+        @Override
+        public SuperHero[] newArray(int size) {
+            return new SuperHero[size];
+        }
+    };
 
     public int getId() {
         return id;
