@@ -9,7 +9,7 @@ public class SuperHero {
     private int id;
     private String name;
     private String description;
-    private Thumbnail thumbail;
+    private Thumbnail thumbnail;
 
     public int getId() {
         return id;
@@ -35,11 +35,11 @@ public class SuperHero {
         this.description = description;
     }
 
-    public Thumbnail getThumbail() {
-        return thumbail;
+    public Thumbnail getThumbnail() {
+        return thumbnail;
     }
 
-    public void setThumbail(Thumbnail thumbail) {
-        this.thumbail = thumbail;
+    public void setThumbnail(Thumbnail thumbnail) {
+        this.thumbnail = thumbnail;
     }
 }
