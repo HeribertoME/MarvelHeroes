@@ -57,7 +57,7 @@ public class HeroListFragment extends Fragment {
             @Override
             public void onHeroClicked(SuperHero superHero) {
                 // Cambiar de fragment a HeroDetailFragment
-                goToHeroDetailFragment();
+                goToHeroDetailFragment(superHero);
             }
         });
 
@@ -67,9 +67,9 @@ public class HeroListFragment extends Fragment {
         return view;
     }
 
-    private void goToHeroDetailFragment() {
+    private void goToHeroDetailFragment(SuperHero superHero) {
 
-        Toast.makeText(getContext(), "Hero Clicked", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Hero Clicked: " + superHero.getName(), Toast.LENGTH_SHORT).show();
     }
 
 }
