@@ -3,6 +3,8 @@ package com.hmelizarraraz.marvelheroes;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +18,17 @@ import java.util.ArrayList;
 
 public class HeroListFragment extends Fragment {
 
-    public static final String TAG = HeroListFragment.class.getSimpleName();
+    private static final String TAG = HeroListFragment.class.getSimpleName();
 
     ArrayList<SuperHero> superHeros;
+    RecyclerView recyclerView;
 
     public HeroListFragment() {
         // Required empty public constructor
+    }
+
+    public interface HeroClickListener {
+        void onHeroClicked(SuperHero superHero);
     }
 
     @Override
@@ -31,19 +38,38 @@ public class HeroListFragment extends Fragment {
         Bundle bundle = getArguments();
         superHeros = bundle.getParcelableArrayList(MainActivity.HERO_LIST);
 
-        if (superHeros == null) {
+        if (superHeros == null)
             Log.d(TAG, "No se recuperaron heroes en el bundle");
-        } else {
-            Toast.makeText(getContext(), "El primer super heroe es: " + superHeros.get(0).getName(), Toast.LENGTH_SHORT).show();
-        }
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_hero_list, container, false);
+
+        recyclerView = (RecyclerView) view.findViewById(R.id.rvSuperHeroes);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        HeroAdapter heroAdapter = new HeroAdapter(superHeros, getContext(), new HeroClickListener() {
+            @Override
+            public void onHeroClicked(SuperHero superHero) {
+                // Cambiar de fragment a HeroDetailFragment
+                goToHeroDetailFragment();
+            }
+        });
+
+        recyclerView.setAdapter(heroAdapter);
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_hero_list, container, false);
+        return view;
+    }
+
+    private void goToHeroDetailFragment() {
+
+        Toast.makeText(getContext(), "Hero Clicked", Toast.LENGTH_SHORT).show();
     }
 
 }

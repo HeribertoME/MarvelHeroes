@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG,"Ocurrio un error en la respuesta. Error: " + response.code());
                 }
 
-
             }
 
             @Override

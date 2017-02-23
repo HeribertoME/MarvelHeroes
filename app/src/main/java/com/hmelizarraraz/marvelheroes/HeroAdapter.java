@@ -21,10 +21,12 @@ public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.MyViewHolder>{
 
     ArrayList<SuperHero> superHeroArrayList;
     Context context;
+    HeroListFragment.HeroClickListener heroClickListener;
 
-    public HeroAdapter(ArrayList superHeroArrayList, Context context) {
+    public HeroAdapter(ArrayList superHeroArrayList, Context context, HeroListFragment.HeroClickListener heroClickListener) {
         this.superHeroArrayList = superHeroArrayList;
         this.context = context;
+        this.heroClickListener = heroClickListener;
     }
 
     @Override
@@ -37,9 +39,7 @@ public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.MyViewHolder>{
     public void onBindViewHolder(MyViewHolder holder, int position) {
         SuperHero superHero = superHeroArrayList.get(position);
 
-        holder.tvHeroDetailName.setText(superHero.getName());
-        //holder.ivHeroPicture.setImageResource(superHero.getThumbnail());
-        Picasso.with(context).load(superHero.getThumbnail().getFullPath()).into(holder.ivHeroPicture);
+        holder.bind(context, superHero, heroClickListener);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.MyViewHolder>{
         return superHeroArrayList.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    static public class MyViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView ivHeroPicture;
         public TextView tvHeroDetailName;
@@ -58,5 +58,18 @@ public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.MyViewHolder>{
             ivHeroPicture = (ImageView) itemView.findViewById(R.id.ivHeroPicture);
             tvHeroDetailName = (TextView) itemView.findViewById(R.id.tvHeroDetailName);
         }
+
+        public void bind(Context context, final SuperHero superHero, final HeroListFragment.HeroClickListener heroClickListener) {
+
+            tvHeroDetailName.setText(superHero.getName());
+            Picasso.with(context).load(superHero.getThumbnail().getFullPath()).into(ivHeroPicture);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    heroClickListener.onHeroClicked(superHero);
+                }
+            });
+        }
+
     }
 }
