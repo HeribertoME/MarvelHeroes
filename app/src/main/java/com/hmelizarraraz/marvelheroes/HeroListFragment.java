@@ -22,9 +22,10 @@ public class HeroListFragment extends Fragment {
 
     private static final String TAG = HeroListFragment.class.getSimpleName();
     public static final String HERO_DETAIL_FRAGMENT = "HERO_DETAIL_FRAGMENT";
+    public static final String SUPER_HERO = "SUPER_HERO";
 
     ArrayList<SuperHero> superHeros;
-    RecyclerView recyclerView;
+    private RecyclerView recyclerView;
 
     public HeroListFragment() {
         // Required empty public constructor
@@ -75,6 +76,12 @@ public class HeroListFragment extends Fragment {
         Toast.makeText(getContext(), "Hero Clicked: " + superHero.getName(), Toast.LENGTH_SHORT).show();
 
         HeroDetailFragment heroDetailFragment = new HeroDetailFragment();
+
+        Bundle bundle = new Bundle();
+
+        bundle.putParcelable(SUPER_HERO, superHero);
+
+        heroDetailFragment.setArguments(bundle);
 
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
