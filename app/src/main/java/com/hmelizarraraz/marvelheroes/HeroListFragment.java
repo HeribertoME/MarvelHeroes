@@ -3,6 +3,8 @@ package com.hmelizarraraz.marvelheroes;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 public class HeroListFragment extends Fragment {
 
     private static final String TAG = HeroListFragment.class.getSimpleName();
+    public static final String HERO_DETAIL_FRAGMENT = "HERO_DETAIL_FRAGMENT";
 
     ArrayList<SuperHero> superHeros;
     RecyclerView recyclerView;
@@ -70,6 +73,17 @@ public class HeroListFragment extends Fragment {
     private void goToHeroDetailFragment(SuperHero superHero) {
 
         Toast.makeText(getContext(), "Hero Clicked: " + superHero.getName(), Toast.LENGTH_SHORT).show();
+
+        HeroDetailFragment heroDetailFragment = new HeroDetailFragment();
+
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        fragmentTransaction.replace(R.id.placeHolder, heroDetailFragment, HERO_DETAIL_FRAGMENT);
+
+        fragmentTransaction.addToBackStack(null);
+
+        fragmentTransaction.commit();
     }
 
 }
