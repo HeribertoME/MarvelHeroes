@@ -39,11 +39,11 @@ public class HeroListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Bundle bundle = getArguments();
-        superHeros = bundle.getParcelableArrayList(MainActivity.HERO_LIST);
+        if (getArguments() != null){
 
-        if (superHeros == null)
-            Log.d(TAG, "No se recuperaron heroes en el bundle");
+            superHeros = getArguments().getParcelableArrayList(MainActivity.HERO_LIST);
+
+        }
 
     }
 
@@ -72,8 +72,6 @@ public class HeroListFragment extends Fragment {
     }
 
     private void goToHeroDetailFragment(SuperHero superHero) {
-
-        Toast.makeText(getContext(), "Hero Clicked: " + superHero.getName(), Toast.LENGTH_SHORT).show();
 
         HeroDetailFragment heroDetailFragment = new HeroDetailFragment();
 

@@ -33,8 +33,6 @@ public class HeroDetailFragment extends Fragment {
 
             superHero = getArguments().getParcelable(HeroListFragment.SUPER_HERO);
 
-            Toast.makeText(getContext(), "Hero obtenido: " + superHero.getName(), Toast.LENGTH_SHORT).show();
-
         }
     }
 
@@ -50,7 +48,11 @@ public class HeroDetailFragment extends Fragment {
         ivHeroPicture = (ImageView) view.findViewById(R.id.ivHeroDetailThumbnail);
 
         tvHeroName.setText(superHero.getName());
-        tvHeroDescription.setText(superHero.getDescription());
+
+        if (superHero.getDescription() != null && !superHero.getDescription().isEmpty())
+            tvHeroDescription.setText(superHero.getDescription());
+        else
+            tvHeroDescription.setText(R.string.no_information_message);
         Picasso.with(getContext()).load(superHero.getThumbnail().getFullPath()).into(ivHeroPicture);
 
         return view;

@@ -7,4 +7,5 @@
     <string name="network_error_message">Error de red. Intentar nuevamente?</string>
     <string name="service_error_message">Error con el servidor. Intentar nuevamente?</string>
     <string name="OK">Ok</string>
+    <string name="no_information_message">No hay información disponible</string>
 </resources>
