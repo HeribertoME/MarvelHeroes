@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +18,7 @@ import com.hmelizarraraz.marvelheroes.Models.SuperHero;
 import java.util.ArrayList;
 
 
-public class HeroListFragment extends Fragment {
+public class HeroGridFragment extends Fragment {
 
     private static final String TAG = HeroListFragment.class.getSimpleName();
     public static final String HERO_DETAIL_FRAGMENT = "HERO_DETAIL_FRAGMENT";
@@ -25,7 +27,7 @@ public class HeroListFragment extends Fragment {
     ArrayList<SuperHero> superHeros;
     private RecyclerView recyclerView;
 
-    public HeroListFragment() {
+    public HeroGridFragment() {
         // Required empty public constructor
     }
 
@@ -49,13 +51,11 @@ public class HeroListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_hero_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_hero_grid, container, false);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.rvSuperHeroes);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        HeroListAdapter heroListAdapter = new HeroListAdapter(superHeros, getContext(), new HeroClickListener() {
+        HeroGridAdapter heroGridAdapter = new HeroGridAdapter(superHeros, getContext(), new HeroGridFragment.HeroClickListener() {
             @Override
             public void onHeroClicked(SuperHero superHero) {
                 // Cambiar de fragment a HeroDetailFragment
@@ -63,7 +63,14 @@ public class HeroListFragment extends Fragment {
             }
         });
 
-        recyclerView.setAdapter(heroListAdapter);
+
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+        int numColumns = (int) (dpWidth/200);
+
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), numColumns));
+
+        recyclerView.setAdapter(heroGridAdapter);
 
         // Inflate the layout for this fragment
         return view;

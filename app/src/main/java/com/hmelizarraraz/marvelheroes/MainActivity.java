@@ -61,6 +61,14 @@ public class MainActivity extends AppCompatActivity {
 
                     FragmentManager fragmentManager = getSupportFragmentManager();
 
+                    boolean isTablet = getResources().getBoolean(R.bool.is_tablet);
+
+                    if (isTablet) {
+                        Toast.makeText(MainActivity.this, "Es una tablet", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(MainActivity.this, "Es un telefono", Toast.LENGTH_SHORT).show();
+                    }
+
                     HeroListFragment savedFragment = (HeroListFragment) fragmentManager.findFragmentByTag(HERO_LIST_FRAGMENT);
 
                     if (savedFragment == null) {

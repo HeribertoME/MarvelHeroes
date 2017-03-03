@@ -14,29 +14,29 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 /**
- * Created by heriberto on 16/02/17.
+ * Created by heriberto on 03/03/17.
  */
 
-public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.MyViewHolder>{
+public class HeroGridAdapter extends RecyclerView.Adapter<HeroGridAdapter.MyViewHolder>{
 
     ArrayList<SuperHero> superHeroArrayList;
     Context context;
-    HeroListFragment.HeroClickListener heroClickListener;
+    HeroGridFragment.HeroClickListener heroClickListener;
 
-    public HeroAdapter(ArrayList superHeroArrayList, Context context, HeroListFragment.HeroClickListener heroClickListener) {
+    public HeroGridAdapter(ArrayList superHeroArrayList, Context context, HeroGridFragment.HeroClickListener heroClickListener) {
         this.superHeroArrayList = superHeroArrayList;
         this.context = context;
         this.heroClickListener = heroClickListener;
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public HeroGridAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.hero_list_item, parent, false);
-        return new MyViewHolder(view);
+        return new HeroGridAdapter.MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(HeroGridAdapter.MyViewHolder holder, int position) {
         SuperHero superHero = superHeroArrayList.get(position);
 
         holder.bind(context, superHero, heroClickListener);
@@ -59,7 +59,7 @@ public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.MyViewHolder>{
             tvHeroDetailName = (TextView) itemView.findViewById(R.id.tvHeroDetailName);
         }
 
-        public void bind(Context context, final SuperHero superHero, final HeroListFragment.HeroClickListener heroClickListener) {
+        public void bind(Context context, final SuperHero superHero, final HeroGridFragment.HeroClickListener heroClickListener) {
 
             tvHeroDetailName.setText(superHero.getName());
             Picasso.with(context).load(superHero.getThumbnail().getFullPath()).into(ivHeroPicture);
