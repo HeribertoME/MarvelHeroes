@@ -31,7 +31,7 @@ public class HeroGridAdapter extends RecyclerView.Adapter<HeroGridAdapter.MyView
 
     @Override
     public HeroGridAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.hero_list_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.hero_grid_item, parent, false);
         return new HeroGridAdapter.MyViewHolder(view);
     }
 

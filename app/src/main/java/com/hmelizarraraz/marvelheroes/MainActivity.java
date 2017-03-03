@@ -24,6 +24,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     private static final String HERO_LIST_FRAGMENT = "hero_list_fragment";
+    public static final String  HERO_GRID_FRAGMENT = "hero_grid_fragment";
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int SUCCESS_CODE = 200;
     public static final String HERO_LIST = "hero_list";
@@ -64,22 +65,38 @@ public class MainActivity extends AppCompatActivity {
                     boolean isTablet = getResources().getBoolean(R.bool.is_tablet);
 
                     if (isTablet) {
+
+                        HeroGridFragment savedFragment = (HeroGridFragment) fragmentManager.findFragmentByTag(HERO_GRID_FRAGMENT);
+
+                        if (savedFragment == null) {
+
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                            HeroGridFragment heroGridFragment = new HeroGridFragment();
+                            heroGridFragment.setArguments(bundle);
+                            fragmentTransaction.add(R.id.placeHolder, heroGridFragment, HERO_GRID_FRAGMENT);
+                            fragmentTransaction.commit();
+                        }
                         Toast.makeText(MainActivity.this, "Es una tablet", Toast.LENGTH_LONG).show();
+
+
                     } else {
-                        Toast.makeText(MainActivity.this, "Es un telefono", Toast.LENGTH_SHORT).show();
+
+                        HeroListFragment savedFragment = (HeroListFragment) fragmentManager.findFragmentByTag(HERO_LIST_FRAGMENT);
+
+                        if (savedFragment == null) {
+
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                            HeroListFragment heroListFragment = new HeroListFragment();
+                            heroListFragment.setArguments(bundle);
+                            fragmentTransaction.add(R.id.placeHolder, heroListFragment, HERO_LIST_FRAGMENT);
+                            fragmentTransaction.commit();
+                        }
+
                     }
 
-                    HeroListFragment savedFragment = (HeroListFragment) fragmentManager.findFragmentByTag(HERO_LIST_FRAGMENT);
 
-                    if (savedFragment == null) {
-
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-                        HeroListFragment heroListFragment = new HeroListFragment();
-                        heroListFragment.setArguments(bundle);
-                        fragmentTransaction.add(R.id.placeHolder, heroListFragment, HERO_LIST_FRAGMENT);
-                        fragmentTransaction.commit();
-                    }
 
 
                 } else {
